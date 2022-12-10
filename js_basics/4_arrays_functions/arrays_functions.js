@@ -169,3 +169,97 @@ console.log(carsJapaneseNissan);
 const carsJapaneseMitsubishi = fnSelectCars(carsJapanese, 'Mitsubishi');
 console.log(carsJapaneseMitsubishi);
 
+// callback
+console.log('\n\n\n');
+
+// problem
+const carsGermanVAG = ['Volkswagen Golf', 'Volkswagen Jetta', 'Volkswagen Passat', 'Audi A6', 'Audi Q8', 'Audi RS3'];
+
+function fnFilterVAGByNameLength(array, keyword) {
+  const arrResult = array.filter((car) => car.includes(keyword) && car.length > 15);
+
+  return arrResult;
+}
+
+const carsGermanVAGVolkswagen = fnFilterVAGByNameLength(carsGermanVAG, 'Volkswagen');
+console.log(carsGermanVAGVolkswagen);
+
+const carsGermanVAGAudi = fnFilterVAGByNameLength(carsGermanVAG, 'Audi');
+console.log(carsGermanVAGAudi);
+
+// solution
+function fnFilterVAGByName(array, func) {
+  const arrResult = [];
+
+  for (let i = 0; i < array.length; i += 1) {
+    if (func(array[i])) {
+      arrResult.push(array[i]);
+    }
+  }
+
+  return arrResult;
+}
+
+const carsGermanVAGVolkswagen1 = fnFilterVAGByName(carsGermanVAG, (car) => car.includes('Volkswagen'));
+console.log(carsGermanVAGVolkswagen1);
+
+// closures
+console.log('\n\n\n');
+
+function fnGetCars(name) {
+  const arrCarsAll = [
+    'Toyota Supra', 'Toyota Cresta', 'Toyota ae86',
+    'Honda S2000', 'Honda Integra', 'Honda Civic',
+    'Mitsubishi Lancer Evo', 'Mitsubishi Colt', 'Mitsubishi Eclipse',
+    'Subaru Impreza WRX STI',
+    'Nissan GTR', 'Nissan Fairlady',
+    'Audi S6', 'Audi R8', 'Audi TT'
+  ];
+
+  return function(model) {
+    return arrCarsAll.filter((car) => car.includes(name)).find((car) => car.includes(model));
+  }
+}
+
+const fnGetAudi = fnGetCars('Audi');
+const audiR8 = fnGetAudi('R8');
+
+console.log(fnGetCars('Audi')('R8'));
+console.log(audiR8);
+
+console.log('\n\n\n');
+
+// problem
+function fnUrlGenerator(domain, name) {
+  return `${name}.${domain}`;
+}
+
+console.log(fnUrlGenerator('com', 'facebook'));
+console.log(fnUrlGenerator('com', 'google'));
+
+console.log(fnUrlGenerator('ua', 'facebook'));
+console.log(fnUrlGenerator('ua', 'google'));
+
+// solution
+function fnGetUrlByDomain(domain) {
+  return function(name) {
+    return `${name}.${domain}`;
+  }
+}
+
+const fnDomainCom = fnGetUrlByDomain('com');
+
+const domainComFacebook = fnDomainCom('facebook');
+console.log(domainComFacebook);
+
+const domainComGoogle = fnDomainCom('google');
+console.log(domainComGoogle);
+
+const fnDomainUa = fnGetUrlByDomain('ua');
+
+const domainUaFacebook = fnDomainUa('facebook');
+console.log(domainUaFacebook);
+
+const domainUaGoogle = fnDomainUa('google');
+console.log(domainUaGoogle);
+
